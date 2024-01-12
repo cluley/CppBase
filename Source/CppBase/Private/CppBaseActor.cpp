@@ -10,6 +10,7 @@ ACppBaseActor::ACppBaseActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	PlayerName = this->GetActorNameOrLabel();
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 	SetRootComponent(Mesh);
 }
@@ -18,6 +19,8 @@ ACppBaseActor::ACppBaseActor()
 void ACppBaseActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	InitialLocation = this->GetActorLocation();
 }
 
 // Called every frame
@@ -47,4 +50,12 @@ void ACppBaseActor::ShowActorInformation()
 	UE_LOG(LogTemp, Display, TEXT("Player Name: %s"), *PlayerName);
 	UE_LOG(LogTemp, Display, TEXT("EnemyNum: %d"), EnemyNum);
 	UE_LOG(LogTemp, Display, TEXT("IsAlive: %i"), IsAlive);
+}
+
+void ACppBaseActor::SinMovement() 
+{ 
+	float FrequencyXTime = Frequency * GetWorld()->GetTimeSeconds();
+	float SinXAmplitude = FMath::Sin(FrequencyXTime) * Amplitude;
+	InitialLocation.Z += SinXAmplitude;
+	this->SetActorLocation(InitialLocation);
 }

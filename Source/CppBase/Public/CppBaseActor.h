@@ -39,7 +39,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere)
-	FString PlayerName = this->GetActorNameOrLabel();
+	FString PlayerName;
 
 	UPROPERTY(EditInstanceOnly)
 	int EnemyNum = 20;
@@ -52,6 +52,18 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void ShowActorInformation();
+
+	UPROPERTY(EditInstanceOnly)
+    float Amplitude = 70.0;
+
+	UPROPERTY(EditInstanceOnly)
+    float Frequency = 4.0;
+
+    UPROPERTY(EditInstanceOnly)
+    FVector InitialLocation;
+
+	UFUNCTION(BlueprintCallable)
+    void SinMovement();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
